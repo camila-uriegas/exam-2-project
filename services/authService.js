@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { users, getNextId } from './dataStore.js';
-import { User } from './objects.js';
+import { users, logins, getNextId } from './dataStore.js';
+import { User, Login } from './objects.js';
 
 export class ValidationError extends Error {
   constructor(message, status = 400) {
@@ -40,5 +40,30 @@ export async function registerUser({ name, email, password }) {
     // creates new user and adds it to the users array
     const user = new User(getNextId('user'), name, email, hashedPassword, 'customer');
     users.push(user);
+    return user;
+}
+
+export async function loginUser({ email, password }) {
+    email = String(email ?? '').trim().toLowerCase();
+    password = String(password ?? '');
+    
+    const user = users.find(user => user.email === email);
+
+    // only compare if the user exists 
+    const passwordCorrect = user ? await bcrypt.compare(password, user.password) : false;
+    const success = Boolean(user) && passwordCorrect;
+
+    // record every login attempt
+    logins.push(new Login(
+        getNextId('login'),
+        user ? user.id : null,
+        new Date().toISOString(),
+        success ? 'successful' : 'failed'
+    ));
+    
+    if (!success) {
+        throw new ValidationError('Incorrect email or password.', 401);
+    }
+
     return user;
 }

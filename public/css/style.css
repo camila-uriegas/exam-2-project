@@ -29,6 +29,18 @@ body {
 .navbar a { color: var(--cream); text-decoration: none; }
 .navbar ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
 
+.logout-form { margin: 0; }
+
+.logout-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--cream);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
 main { padding: 2rem; }
 
 .pageTitle {

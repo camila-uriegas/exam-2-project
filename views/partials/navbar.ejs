@@ -2,8 +2,20 @@
   <a class="brand" href="/">Reserve & Dine</a>
   <ul>
     <li><a href="/">Home</a></li>
-    <li><a href="/restaurants">Restaurants</a></li>
-    <li><a href="/login">Log in</a></li>
-    <li><a href="/register">Register</a></li>
+
+    <% if (user) { %>
+      <li><a href="/restaurants">Restaurants</a></li>
+      <% if (user.role === 'manager') { %>
+        <li><a href="/manager">Dashboard</a></li>
+      <% } %>
+      <li>
+        <form method="POST" action="/logout" class="logout-form">
+          <button type="submit" class="logout-button">Log out</button>
+        </form>
+      </li>
+    <% } else { %>
+      <li><a href="/login">Log in</a></li>
+      <li><a href="/register">Register</a></li>
+    <% } %>
   </ul>
 </nav>
