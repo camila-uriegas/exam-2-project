@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import restaurantRoutes from './routes/restaurantRoutes.js';
 
 const app = express();
 const PORT = 3000;   // port number for the server
@@ -13,6 +14,9 @@ app.use(express.static(path.join(import.meta.dirname, 'public')));
 app.get('/', (req, res) => {
     res.render('index', { title : 'Home' });
 });
+
+app.use('/restaurants', restaurantRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

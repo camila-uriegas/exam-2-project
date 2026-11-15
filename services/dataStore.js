@@ -24,6 +24,7 @@ export function getNextId(type) {
   return counters[type]++;
 }
 
+
 // DATA
 
 // RESTAURANTS

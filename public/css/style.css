@@ -1,6 +1,12 @@
 :root {
-  --maroon: #6b0808;
-  --cream: #f0ead8;
+  --maroon: #6d0808;
+  --cream: #ffedd7;
+}
+
+.luxurious-script-regular {
+  font-family: "Luxurious Script", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
@@ -8,6 +14,7 @@ body {
   font-family: Georgia, serif;
   background: var(--cream);
   color: var(--maroon);
+  text-align: center;
 }
 
 .navbar {
@@ -24,6 +31,49 @@ body {
 
 main { padding: 2rem; }
 
+.pageTitle {
+  text-align: center;
+  font-size: 7rem;
+  font-weight: 200;
+  margin-bottom: 1rem;
+  font-family: "Luxurious Script", cursive;
+}
+
+.home-image {
+  position: relative;
+  min-height: 120vh;   
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* center the content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  color: var(--cream);
+}
+
+/* dark layer over the photo so the text stays readable */
+.home-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* keep the text and button above the dark layer */
+.home-image > * {
+  position: relative;
+}
+
+.home-image .button {
+  background: var(--cream);
+  color: var(--maroon);
+}
+
 .button {
   display: inline-block;
   padding: 0.6rem 1.2rem;
@@ -33,3 +83,89 @@ main { padding: 2rem; }
 }
 
 .footer { text-align: center; padding: 1rem; }
+
+/* restaurant banner */
+.page-hero {
+  background-color: #1a0a0a;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+                    url('/images/reservation.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 15rem 15rem;
+  text-align: center;
+}
+
+.page-hero h1 {
+  margin: 0;
+  color: #ffe2b8;
+  font-size: 7rem;
+  font-weight: 200;
+  font-family: "Luxurious Script", cursive;
+}
+
+/* section with the restaurant cards */
+.restaurant-section {
+  background: var(--cream);
+  padding: 2.5rem 2rem;
+}
+
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.restaurant-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--maroon);
+  color: var(--cream);
+}
+
+/* photo on cards */
+.card-image {
+  height: 150px;
+  background-color: #3a0505;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0.6rem;
+}
+
+.card-image h2 {
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* menu and button */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem 1.2rem 1.2rem;
+}
+
+.card-body ul {
+  flex: 1;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+  text-align: left;
+}
+
+.reserve-button {
+  align-self: center;
+  padding: 0.4rem 2.5rem;
+  background: var(--cream);
+  color: var(--maroon);
+}

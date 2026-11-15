@@ -1,0 +1,29 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<section class="page-hero">
+  <h1>Choose a Restaurant</h1>
+</section>
+
+<main class="restaurant-section">
+  <div class="restaurant-grid">
+    <% restaurants.forEach((restaurant) => { %>
+      <article class="restaurant-card">
+        <div class="card-image" style="background-image: url('/images/restaurant-<%= restaurant.id %>.jpg')">
+          <h2><%= restaurant.name %></h2>
+        </div>
+
+        <div class="card-body">
+          <ul>
+            <% restaurant.menu.forEach((item) => { %>
+              <li><%= item.name %> $<%= item.price %></li>
+            <% }) %>
+          </ul>
+          <a class="button reserve-button" href="/reserve/<%= restaurant.id %>">Reserve</a>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
