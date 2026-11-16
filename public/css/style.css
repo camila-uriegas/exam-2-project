@@ -249,3 +249,31 @@ main { padding: 2rem; }
   background: var(--cream);
   color: var(--maroon);
 }
+
+.reserve-title {
+  font-size: 2.4rem !important;
+  text-transform: none !important;
+}
+
+.form-box select {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.4rem;
+  padding: 0.7rem 0.9rem;
+  border: none;
+  border-radius: 10px;
+  background: #78806f;
+  color: var(--cream);
+  font-size: 1rem;
+}
+
+.table-option {
+  display: flex !important;
+  align-items: center;
+  font-size: 1.1rem !important;
+}
+
+.form-box input[type="radio"] {
+  width: auto;
+  margin: 0 0.7rem 0 0;
+}

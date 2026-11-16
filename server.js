@@ -3,6 +3,8 @@ import path from 'path';
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import session from 'express-session';
+import reservationRoutes from './routes/reservationRoutes.js';
+
 
 const app = express();
 const PORT = 3000;   // port number for the server
@@ -33,6 +35,9 @@ app.get('/', (req, res) => {
 app.use('/restaurants', restaurantRoutes);
 app.use('/', authRoutes);
 
+app.use('/reserve', reservationRoutes);
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+

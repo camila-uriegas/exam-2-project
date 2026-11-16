@@ -1,0 +1,65 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<main class="form-page">
+  <div class="form-box">
+    <h1 class="reserve-title"><%= restaurant.name %></h1>
+    <p>Open <%= restaurant.openHour %>:00 to <%= restaurant.closeHour %>:00</p>
+
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+
+    <% if (reservation) { %>
+      <h2>Reservation confirmed</h2>
+      <p>Reservation ID: <strong><%= reservation.id %></strong></p>
+      <p><%= reservation.date %> at <%= reservation.time %></p>
+      <p>Party of <%= reservation.partySize %></p>
+      <a class="button" href="/restaurants">Back to restaurants</a>
+
+    <% } else { %>
+      <!-- checks availability -->
+      <form method="GET" action="/reserve/<%= restaurant.id %>">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="<%= date %>" min="<%= today %>" required>
+
+        <label for="time">Time:</label>
+        <select id="time" name="time" required>
+          <% slots.forEach((slot) => { %>
+            <option value="<%= slot %>" <%= slot === time ? 'selected' : '' %>><%= slot %></option>
+          <% }) %>
+        </select>
+
+        <label for="partySize">Number of guests:</label>
+        <input type="number" id="partySize" name="partySize" min="1" max="5" value="<%= partySize %>" required>
+
+        <button type="submit" class="button">Check tables</button>
+      </form>
+
+      <!-- picks available table and time -->
+      <% if (availableTables !== null) { %>
+        <% if (availableTables.length === 0) { %>
+          <p>No tables are available for that date, time, and party size. Try another time.</p>
+        <% } else { %>
+          <form method="POST" action="/reserve/<%= restaurant.id %>">
+            <input type="hidden" name="date" value="<%= date %>">
+            <input type="hidden" name="time" value="<%= time %>">
+            <input type="hidden" name="partySize" value="<%= partySize %>">
+
+            <p class="form-switch">Available tables:</p>
+            <% availableTables.forEach((table) => { %>
+              <label class="table-option">
+                <input type="radio" name="tableId" value="<%= table.id %>" required>
+                Table <%= table.tableNumber %> (seats <%= table.capacity %>)
+              </label>
+            <% }) %>
+
+            <button type="submit" class="button">Book table</button>
+          </form>
+        <% } %>
+      <% } %>
+    <% } %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

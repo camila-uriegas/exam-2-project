@@ -17,3 +17,8 @@ export function getRestaurantsWithMenus() {
         menu: getMenuByRestaurant(restaurant.id),
     }));
 }
+
+export function getRestaurantById(id) {
+  return restaurants.find((restaurant) => restaurant.id === id);
+}
+

@@ -38,7 +38,7 @@ restaurants.push(new Restaurant(getNextId('restaurant'), 'Morning Glory', '1049 
 // rest 1 -> 1-5, rest 2 -> 6-10, rest 3 -> 11-15, rest 4 -> 16-20
 restaurants.forEach((restaurant) => {
   for (let number = 1; number <= 5; number++) {
-    tables.push(new Table(getNextId('table'), restaurant.id, number, number, 'available'));
+    tables.push(new Table(getNextId('table'), restaurant.id, number, 5, 'available'));
   }
 });
 
