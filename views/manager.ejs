@@ -1,0 +1,61 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<main class="dashboard">
+  <h1 class="luxurious-script-regular">Reservations</h1>
+
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <% if (message) { %><p class="success"><%= message %></p><% } %>
+
+  <!-- search by reservation ID -->
+  <form method="GET" action="/manager" class="search-form">
+    <label for="q">Search by reservation ID:</label>
+    <input type="text" id="q" name="q" value="<%= query %>" placeholder="e.g. 1">
+    <button type="submit" class="button">Search</button>
+  </form>
+
+  <% if (searchMessage) { %>
+    <p class="error"><%= searchMessage %></p>
+  <% } %>
+
+  <% if (searchResult) { %>
+    <div class="search-result">
+      <h2>Reservation #<%= searchResult.id %></h2>
+      <p><%= searchResult.restaurantName %>, table <%= searchResult.tableNumber %></p>
+      <p><%= searchResult.date %> at <%= searchResult.time %>, party of <%= searchResult.partySize %></p>
+      <p>Customer: <%= searchResult.customerName %></p>
+      <form method="POST" action="/manager/reservations/<%= searchResult.id %>/delete"
+            onsubmit="return confirm('Delete this reservation?');">
+        <button type="submit" class="button">Delete</button>
+      </form>
+    </div>
+  <% } %>
+
+  <!-- all reservations by restaurant -->
+  <div class="dashboard-grid">
+    <% groups.forEach((group) => { %>
+      <section class="dashboard-card">
+        <h2><%= group.name %></h2>
+
+        <% if (group.reservations.length === 0) { %>
+          <p>No reservations.</p>
+        <% } else { %>
+          <ul>
+            <% group.reservations.forEach((r) => { %>
+              <li>
+                <strong>#<%= r.id %></strong> - <%= r.date %> <%= r.time %><br>
+                <%= r.customerName %>, table <%= r.tableNumber %>, party of <%= r.partySize %>
+                <form method="POST" action="/manager/reservations/<%= r.id %>/delete"
+                      onsubmit="return confirm('Delete this reservation?');">
+                  <button type="submit" class="delete-button">Delete</button>
+                </form>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
+    <% }) %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

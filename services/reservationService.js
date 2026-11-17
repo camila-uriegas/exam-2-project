@@ -1,4 +1,4 @@
-import { tables, reservations, getNextId } from './dataStore.js';
+import { users, restaurants, tables, reservations, getNextId } from './dataStore.js';
 import { Reservation } from './objects.js';
 import { ValidationError } from './authService.js';
 import { getRestaurantById } from './restaurantService.js';
@@ -94,4 +94,42 @@ export function createReservation({ userId, restaurantId, tableId, date, time, p
     reservations.push(reservation);
     return reservation;
 
+}
+
+// adds the names the dashboard needs (customer, table number, restaurant)
+function describeReservation(r) {
+  const table = tables.find((t) => t.id === r.tableId);
+  const customer = users.find((u) => u.id === r.userId);
+  const restaurant = restaurants.find((x) => table && x.id === table.restaurantId);
+  return {
+    ...r,
+    restaurantId: restaurant ? restaurant.id : null,
+    restaurantName: restaurant ? restaurant.name : 'Unknown',
+    tableNumber: table ? table.tableNumber : '?',
+    customerName: customer ? customer.name : 'Unknown',
+  };
+}
+
+// every restaurant with its reservations
+export function getReservationsByRestaurant() {
+  const all = reservations.map(describeReservation);
+  return restaurants.map((restaurant) => ({
+    ...restaurant,
+    reservations: all.filter((r) => r.restaurantId === restaurant.id),
+  }));
+}
+
+// one reservation by ID, or null
+export function findReservationById(id) {
+  const reservation = reservations.find((r) => r.id === Number(id));
+  return reservation ? describeReservation(reservation) : null;
+}
+
+// removes a reservation from the collection
+export function deleteReservation(id) {
+  const index = reservations.findIndex((r) => r.id === Number(id));
+  if (index === -1) {
+    throw new ValidationError('Reservation not found.', 404);
+  }
+  reservations.splice(index, 1);   // splice keeps the same array; never reassign an exported array
 }

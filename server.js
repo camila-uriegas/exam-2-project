@@ -4,6 +4,7 @@ import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import session from 'express-session';
 import reservationRoutes from './routes/reservationRoutes.js';
+import managerRoutes from './routes/managerRoutes.js';
 
 
 const app = express();
@@ -36,6 +37,8 @@ app.use('/restaurants', restaurantRoutes);
 app.use('/', authRoutes);
 
 app.use('/reserve', reservationRoutes);
+
+app.use('/manager', managerRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
